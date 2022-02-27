@@ -14,37 +14,47 @@ $(document).ready(function () {      // Wait for the page to load
 
     // a function that returns html for a task
     function renderTodayTask(text, index, type) {
+        var bg = 'w3-light-gray';
         if (type) {
-            return '<div class="" id="task-' + index + '">' +
+            return '<li class="w3-content ' + bg + '" id="task-' + index + '">' +
                 '<form>' +
-                '<h4>' + text + ' <input type="checkbox" class="" id="today-check-' + index + '" />' +
+                '<h4>' + text + ' <input type="checkbox" class="w3-check w3-right" id="today-check-' + index + '" />' +
                 '</form>' +
-                '</div>';
+                '</li>';
         }
-        return '<div class="" id="done-' + index + '">' +
+        return '<li class="w3-content ' + bg + '" id="done-' + index + '">' +
             '<form>' +
-            '<h4>' + text + ' <input type="checkbox" class="" id="done-check-' + index + '" checked />' +
+            '<h4>' + text + ' <input type="checkbox" class="w3-check w3-right" id="done-check-' + index + '" checked />' +
             '</form>' +
-            '</div>';
+            '</li>';
 
     }
 
     // a function to render all the done and undone tasks
     function renderTasks() {
-        $('#today-tasks').html('');
-        $('#done-tasks').html('');
-
+        $('#today-tasks').html('').attr('class', 'w3-ul');
+        $('#done-tasks').html('').attr('class', 'w3-ul w3-margin-right w3-margin-left');
         for (var i in localStorage) {
             if (/^([\w]+)([0-9]+)$/.test(i)) {
                 var result = /^([\w]+)([0-9]+)$/.exec(i);
                 if (result[1] === 'task') {
                     $('#today-tasks').html(renderTodayTask(localStorage[i], result[2], true) + $('#today-tasks').html());
-                    // add event handler to the checkbox
+                }
+                else if (result[1] === 'done') {
+                    $('#done-tasks').html(renderTodayTask(localStorage[i], result[2]) + $('#done-tasks').html());
+                }
+            }
+        }
+
+        // Add event handlers to the checkboxes
+        for(var i in localStorage) {
+            if (/^([\w]+)([0-9]+)$/.test(i)) {
+                var result = /^([\w]+)([0-9]+)$/.exec(i);
+                if (result[1] === 'task') {
                     (function () {
                         var c = i;
                         var index = result[2];
                         $('#today-check-' + index).click(function () {
-
                             // add the task to the done tasks list
                             localStorage['done' + doneTasksNum] = localStorage[c];
                             doneTasksNum++;
@@ -54,28 +64,24 @@ $(document).ready(function () {      // Wait for the page to load
                             todayTasksNum--;
                         });
                     }());
-
                 }
                 else if (result[1] === 'done') {
-                    $('#done-tasks').html(renderTodayTask(localStorage[i], result[2]) + $('#done-tasks').html());
-                    // add event handler to the checkbox
                     (function () {
                         var c = i;
                         var index = result[2];
                         $('#done-check-' + index).click(function () {
 
-                            // add the task to the done tasks list
+                            // add the task to the undone tasks list
                             localStorage['task' + doneTasksNum] = localStorage[c];
                             todayTasksNum++;
 
-                            // then delete it from undone tasks list
+                            // then delete it from done tasks list
                             delete localStorage['done' + index];
                             doneTasksNum--;
                         });
                     }());
                 }
             }
-
         }
     }
 

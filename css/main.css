@@ -3,13 +3,39 @@ body {
 }
 
 #open-setting-btn {
-    background-color: white;
-    background-image: url('../img/settings2.png');
-    width: 128px;
-    height: 128px;
+    background-image: url('../img/exo_ic_settings.png');
+    width: 76px;
+    height: 76px;
     border: none
 }
 
 #done-tasks {
     display: none;
+}
+
+input[id^="view-"] {
+    width: 50%;
+    color:black
+}
+
+#my-tasks {
+    margin-top: 100px
+}
+
+#new-task {
+    width: 80%;
+    float: left;
+}
+
+#add-todo-btn {
+    /* float:right; */
+}
+
+#done-tasks {
+    margin-top: 100px;
+}
+
+li {
+    margin-right: 0px;
+    margin-left: 0px;
 }

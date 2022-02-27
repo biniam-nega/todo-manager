@@ -11,36 +11,38 @@
     <script src="js/main.js"></script>
 </head>
 
-<body class="">
-    <div class="">
-        <h1 class="" id="logo">MY-TODO <input type="button" class="" id="open-setting-btn" /></h1>
+<body>
+    <div class="w3-bar w3-top w3-teal">
+        <h1 class="w3-bar-item w3-left" id="logo">MY-TODO </h1>
+        <input type="button" class="w3-button w3-teal w3-right w3-hover-teal" id="open-setting-btn" />
     </div>
 
-    <div class="">
-        <input type="button" class="" value="Today's Todos" id="view-today-btn" />
-        <input type="button" class="" value="Done" id="view-done-btn" />
-    </div><br /><br /><br /><br /><br />
+    <div class="w3-bar w3-bottom w3-row-padding w3-teal">
+        <input type="button" class="w3-bar-item w3-button w3-teal w3-mobile" value="Today's Todos"
+            id="view-today-btn" />
+        <input type="button" class="w3-bar-item w3-button w3-teal w3-mobile" value="Done" id="view-done-btn" />
+    </div>
 
-    <div class="" id="my-tasks">
-        <div class="" id="add-todo-form">
-            <form>
-                <input type="text" class="" id="new-task" placeholder="Enter task..." />
-                <input type="button" class="" id="add-todo-btn" value="&plus;" />
-            </form>
-        </div><br /><br /><br /><br /><br />
+    <div class="w3-row-padding w3-padding-64 w3-container w3-margin-top" id="my-tasks">
+        <div class="w3-card w3-margin-top w3-margin-bottom w3-light-gray" id="add-todo-form">
+            <div class="container">
+                <form>
+                    <input type="text" class="w3-input w3-margin-bottom w3-margin-top w3-margin-right w3-margin-left"
+                        id="new-task" placeholder="Enter task..." />
+                    <span><input type="button" class="w3-button w3-teal w3-margin-bottom w3-margin-top"
+                            id="add-todo-btn" value="&plus;" /></span>
+                </form>
+            </div>
 
-        <div id="today-tasks">
         </div>
 
+        <ul id="today-tasks">
+        </ul>
+
     </div>
 
-    <div class="" id="done-tasks">
-        <!-- <div class="" id="done-0">
-            <form>
-                <h4>Write the landing page <input type="checkbox" class="" id="done-0" checked />
-            </form>
-        </div> -->
-    </div>
+    <ul id="done-tasks">
+    </ul>
 </body>
 
 </html>
