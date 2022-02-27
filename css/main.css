@@ -1,0 +1,15 @@
+body {
+    max-width: 1200px;
+}
+
+#open-setting-btn {
+    background-color: white;
+    background-image: url('../img/settings2.png');
+    width: 128px;
+    height: 128px;
+    border: none
+}
+
+#done-tasks {
+    display: none;
+}
