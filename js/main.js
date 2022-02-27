@@ -58,6 +58,21 @@ $(document).ready(function () {      // Wait for the page to load
                 }
                 else if (result[1] === 'done') {
                     $('#done-tasks').html(renderTodayTask(localStorage[i], result[2]) + $('#done-tasks').html());
+                    // add event handler to the checkbox
+                    (function () {
+                        var c = i;
+                        var index = result[2];
+                        $('#done-check-' + index).click(function () {
+
+                            // add the task to the done tasks list
+                            localStorage['task' + doneTasksNum] = localStorage[c];
+                            todayTasksNum++;
+
+                            // then delete it from undone tasks list
+                            delete localStorage['done' + index];
+                            doneTasksNum--;
+                        });
+                    }());
                 }
             }
 
@@ -87,6 +102,7 @@ $(document).ready(function () {      // Wait for the page to load
         if ($('#new-task').val()) {      // If the text input is not empty
             todayTasksNum++;
             localStorage['task' + todayTasksNum] = $('#new-task').val();
+            $('#new-task').val('');
         }
     });
 });
