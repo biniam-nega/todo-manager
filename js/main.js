@@ -12,25 +12,24 @@ $(document).ready(function () {      // Wait for the page to load
         }
     }
 
-    my_lib.augmentArray();  // Add some functionalities to array prototype -from my_lib.js- (I want the ability to delete an element from an array)
-
     // a function that returns html for a task
     function renderTodayTask(text, index, type) {
         if (type) {
             return '<div class="" id="task-' + index + '">' +
                 '<form>' +
-                '<h4>' + text + ' <input type="checkbox" class="" id="check-' + index + '" />' +
+                '<h4>' + text + ' <input type="checkbox" class="" id="today-check-' + index + '" />' +
                 '</form>' +
                 '</div>';
         }
         return '<div class="" id="done-' + index + '">' +
             '<form>' +
-            '<h4>' + text + ' <input type="checkbox" class="" id="done-' + index + '" checked />' +
+            '<h4>' + text + ' <input type="checkbox" class="" id="done-check-' + index + '" checked />' +
             '</form>' +
             '</div>';
 
     }
 
+    // a function to render all the done and undone tasks
     function renderTasks() {
         $('#today-tasks').html('');
         $('#done-tasks').html('');
@@ -40,6 +39,22 @@ $(document).ready(function () {      // Wait for the page to load
                 var result = /^([\w]+)([0-9]+)$/.exec(i);
                 if (result[1] === 'task') {
                     $('#today-tasks').html(renderTodayTask(localStorage[i], result[2], true) + $('#today-tasks').html());
+                    // add event handler to the checkbox
+                    (function () {
+                        var c = i;
+                        var index = result[2];
+                        $('#today-check-' + index).click(function () {
+
+                            // add the task to the done tasks list
+                            localStorage['done' + doneTasksNum] = localStorage[c];
+                            doneTasksNum++;
+
+                            // then delete it from undone tasks list
+                            delete localStorage['task' + index];
+                            todayTasksNum--;
+                        });
+                    }());
+
                 }
                 else if (result[1] === 'done') {
                     $('#done-tasks').html(renderTodayTask(localStorage[i], result[2]) + $('#done-tasks').html());
@@ -49,7 +64,8 @@ $(document).ready(function () {      // Wait for the page to load
         }
     }
 
-    setInterval(renderTasks, 50);
+    // render the tasks every 50ms
+    setInterval(renderTasks, 500);
 
 
     /* Add event listeners */
@@ -69,7 +85,6 @@ $(document).ready(function () {      // Wait for the page to load
     // Add a task
     $('#add-todo-btn').click(function () {
         if ($('#new-task').val()) {      // If the text input is not empty
-            console.log('here')
             todayTasksNum++;
             localStorage['task' + todayTasksNum] = $('#new-task').val();
         }
